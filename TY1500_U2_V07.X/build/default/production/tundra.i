@@ -5651,6 +5651,7 @@ void ECCP3_CallBack(uint16_t capturedValue) {
   static uint8_t bit_cnt = 0;
   static _Bool fRise_edge = 0;
   static _Bool fStart_bit = 0;
+  _Bool fUART_TX = 0;
 
   if (CCP3CON == FALLING_EDGE_TRIG) {
 
@@ -5672,25 +5673,24 @@ void ECCP3_CallBack(uint16_t capturedValue) {
 
       if (positive_pulse_width_us > UART_LEVEL) {
         LATBbits.LATB6 = 0;
+        fUART_TX=0;
       } else {
         LATBbits.LATB6 = 1;
+        fUART_TX=1;
       }
-
-      if (positive_pulse_width_us > negative_pulse_width_us)
-        diff_us = positive_pulse_width_us - negative_pulse_width_us;
-      else
-        diff_us = negative_pulse_width_us - positive_pulse_width_us;
-# 446 "tundra.c"
+# 449 "tundra.c"
       if (!fStart_bit) {
 
-        if (diff_us < LOGIC_LEVEL) {
+
+        if (!fUART_TX) {
 
           fStart_bit = 1;
           bit_cnt = 0;
         }
       } else {
 
-        if (diff_us < LOGIC_LEVEL) {
+
+        if (!fUART_TX) {
 
           rx_data &= ~(1 << bit_cnt);
         } else {

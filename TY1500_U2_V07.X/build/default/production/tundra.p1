@@ -1562,331 +1562,327 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i F3210
 -> -> 0 `i `a
 ]
-"408
-[; ;tundra.c: 408:   if (CCP3CON == FALLING_EDGE_TRIG) {
+"407
+[; ;tundra.c: 407:   _Bool fUART_TX = 0;
+[v _fUART_TX `a ~T0 @X0 1 a ]
+[e = _fUART_TX -> -> 0 `i `a ]
+"409
+[; ;tundra.c: 409:   if (CCP3CON == FALLING_EDGE_TRIG) {
 [e $ ! == -> _CCP3CON `i -> _FALLING_EDGE_TRIG `i 424  ]
 {
-"410
-[; ;tundra.c: 410:     falling_edge_time = capturedValue;
-[e = F3206 _capturedValue ]
 "411
-[; ;tundra.c: 411:     CCP3CON = RISING_EDGE_TRIG;
-[e = _CCP3CON _RISING_EDGE_TRIG ]
+[; ;tundra.c: 411:     falling_edge_time = capturedValue;
+[e = F3206 _capturedValue ]
 "412
-[; ;tundra.c: 412:     if (fRise_edge) {
+[; ;tundra.c: 412:     CCP3CON = RISING_EDGE_TRIG;
+[e = _CCP3CON _RISING_EDGE_TRIG ]
+"413
+[; ;tundra.c: 413:     if (fRise_edge) {
 [e $ ! != -> F3209 `i -> 0 `i 425  ]
 {
-"413
-[; ;tundra.c: 413:       fRise_edge = 0;
+"414
+[; ;tundra.c: 414:       fRise_edge = 0;
 [e = F3209 -> -> 0 `i `a ]
-"415
-[; ;tundra.c: 415:       if (falling_edge_time >= rising_edge_time) {
+"416
+[; ;tundra.c: 416:       if (falling_edge_time >= rising_edge_time) {
 [e $ ! >= -> F3206 `ui -> F3207 `ui 426  ]
 {
-"416
-[; ;tundra.c: 416:         positive_pulse_width = falling_edge_time - rising_edge_time;
-[e = F3202 -> - -> F3206 `ui -> F3207 `ui `us ]
 "417
-[; ;tundra.c: 417:       } else {
+[; ;tundra.c: 417:         positive_pulse_width = falling_edge_time - rising_edge_time;
+[e = F3202 -> - -> F3206 `ui -> F3207 `ui `us ]
+"418
+[; ;tundra.c: 418:       } else {
 }
 [e $U 427  ]
 [e :U 426 ]
 {
-"419
-[; ;tundra.c: 419:         positive_pulse_width = ~rising_edge_time + 1 + falling_edge_time;
-[e = F3202 -> + + ~ -> F3207 `ui -> -> 1 `i `ui -> F3206 `ui `us ]
 "420
-[; ;tundra.c: 420:       }
+[; ;tundra.c: 420:         positive_pulse_width = ~rising_edge_time + 1 + falling_edge_time;
+[e = F3202 -> + + ~ -> F3207 `ui -> -> 1 `i `ui -> F3206 `ui `us ]
+"421
+[; ;tundra.c: 421:       }
 }
 [e :U 427 ]
-"422
-[; ;tundra.c: 422:       negative_pulse_width_us = (positive_pulse_width >> 3) & 0xff;
-[e = F3204 -> & >> -> F3202 `ui -> 3 `i -> -> 255 `i `ui `uc ]
 "423
-[; ;tundra.c: 423:       positive_pulse_width_us = (negative_pulse_width >> 3) & 0xff;
+[; ;tundra.c: 423:       negative_pulse_width_us = (positive_pulse_width >> 3) & 0xff;
+[e = F3204 -> & >> -> F3202 `ui -> 3 `i -> -> 255 `i `ui `uc ]
+"424
+[; ;tundra.c: 424:       positive_pulse_width_us = (negative_pulse_width >> 3) & 0xff;
 [e = F3203 -> & >> -> F3201 `ui -> 3 `i -> -> 255 `i `ui `uc ]
-"426
-[; ;tundra.c: 426:       if (positive_pulse_width_us > UART_LEVEL) {
+"427
+[; ;tundra.c: 427:       if (positive_pulse_width_us > UART_LEVEL) {
 [e $ ! > -> F3203 `i -> _UART_LEVEL `i 428  ]
 {
-"427
-[; ;tundra.c: 427:         LATBbits.LATB6 = 0;
-[e = . . _LATBbits 0 6 -> -> 0 `i `uc ]
 "428
-[; ;tundra.c: 428:       } else {
+[; ;tundra.c: 428:         LATBbits.LATB6 = 0;
+[e = . . _LATBbits 0 6 -> -> 0 `i `uc ]
+"429
+[; ;tundra.c: 429:         fUART_TX=0;
+[e = _fUART_TX -> -> 0 `i `a ]
+"430
+[; ;tundra.c: 430:       } else {
 }
 [e $U 429  ]
 [e :U 428 ]
 {
-"429
-[; ;tundra.c: 429:         LATBbits.LATB6 = 1;
+"431
+[; ;tundra.c: 431:         LATBbits.LATB6 = 1;
 [e = . . _LATBbits 0 6 -> -> 1 `i `uc ]
-"430
-[; ;tundra.c: 430:       }
+"432
+[; ;tundra.c: 432:         fUART_TX=1;
+[e = _fUART_TX -> -> 1 `i `a ]
+"433
+[; ;tundra.c: 433:       }
 }
 [e :U 429 ]
-"432
-[; ;tundra.c: 432:       if (positive_pulse_width_us > negative_pulse_width_us)
-[e $ ! > -> F3203 `i -> F3204 `i 430  ]
-"433
-[; ;tundra.c: 433:         diff_us = positive_pulse_width_us - negative_pulse_width_us;
-[e = F3205 -> - -> F3203 `i -> F3204 `i `uc ]
-[e $U 431  ]
-"434
-[; ;tundra.c: 434:       else
-[e :U 430 ]
-"435
-[; ;tundra.c: 435:         diff_us = negative_pulse_width_us - positive_pulse_width_us;
-[e = F3205 -> - -> F3204 `i -> F3203 `i `uc ]
-[e :U 431 ]
-"446
-[; ;tundra.c: 446:       if (!fStart_bit) {
-[e $ ! ! != -> F3210 `i -> 0 `i 432  ]
+"449
+[; ;tundra.c: 449:       if (!fStart_bit) {
+[e $ ! ! != -> F3210 `i -> 0 `i 430  ]
 {
-"448
-[; ;tundra.c: 448:         if (diff_us < LOGIC_LEVEL) {
-[e $ ! < -> F3205 `i -> _LOGIC_LEVEL `i 433  ]
-{
-"450
-[; ;tundra.c: 450:           fStart_bit = 1;
-[e = F3210 -> -> 1 `i `a ]
-"451
-[; ;tundra.c: 451:           bit_cnt = 0;
-[e = F3208 -> -> 0 `i `uc ]
 "452
-[; ;tundra.c: 452:         }
-}
-[e :U 433 ]
-"453
-[; ;tundra.c: 453:       } else {
-}
-[e $U 434  ]
-[e :U 432 ]
+[; ;tundra.c: 452:         if (!fUART_TX) {
+[e $ ! ! != -> _fUART_TX `i -> 0 `i 431  ]
 {
+"454
+[; ;tundra.c: 454:           fStart_bit = 1;
+[e = F3210 -> -> 1 `i `a ]
 "455
-[; ;tundra.c: 455:         if (diff_us < LOGIC_LEVEL) {
-[e $ ! < -> F3205 `i -> _LOGIC_LEVEL `i 435  ]
-{
-"457
-[; ;tundra.c: 457:           rx_data &= ~(1 << bit_cnt);
-[e =& _rx_data -> ~ << -> 1 `i -> F3208 `i `uc ]
-"458
-[; ;tundra.c: 458:         } else {
+[; ;tundra.c: 455:           bit_cnt = 0;
+[e = F3208 -> -> 0 `i `uc ]
+"456
+[; ;tundra.c: 456:         }
 }
-[e $U 436  ]
-[e :U 435 ]
+[e :U 431 ]
+"457
+[; ;tundra.c: 457:       } else {
+}
+[e $U 432  ]
+[e :U 430 ]
 {
 "460
-[; ;tundra.c: 460:           rx_data |= (1 << bit_cnt);
-[e =| _rx_data -> << -> 1 `i -> F3208 `i `uc ]
-"461
-[; ;tundra.c: 461:         }
-}
-[e :U 436 ]
-"463
-[; ;tundra.c: 463:         bit_cnt++;
-[e ++ F3208 -> -> 1 `i `uc ]
-"465
-[; ;tundra.c: 465:         if (bit_cnt > BIT_7) {
-[e $ ! > -> F3208 `i -> _BIT_7 `i 437  ]
+[; ;tundra.c: 460:         if (!fUART_TX) {
+[e $ ! ! != -> _fUART_TX `i -> 0 `i 433  ]
 {
-"466
-[; ;tundra.c: 466:           fStart_bit = 0;
-[e = F3210 -> -> 0 `i `a ]
-"467
-[; ;tundra.c: 467:           fReceiver_Byte = 1;
-[e = _fReceiver_Byte -> -> 1 `i `a ]
-"468
-[; ;tundra.c: 468:         }
+"462
+[; ;tundra.c: 462:           rx_data &= ~(1 << bit_cnt);
+[e =& _rx_data -> ~ << -> 1 `i -> F3208 `i `uc ]
+"463
+[; ;tundra.c: 463:         } else {
 }
-[e :U 437 ]
-"469
-[; ;tundra.c: 469:       }
+[e $U 434  ]
+[e :U 433 ]
+{
+"465
+[; ;tundra.c: 465:           rx_data |= (1 << bit_cnt);
+[e =| _rx_data -> << -> 1 `i -> F3208 `i `uc ]
+"466
+[; ;tundra.c: 466:         }
 }
 [e :U 434 ]
+"468
+[; ;tundra.c: 468:         bit_cnt++;
+[e ++ F3208 -> -> 1 `i `uc ]
 "470
-[; ;tundra.c: 470:     }
+[; ;tundra.c: 470:         if (bit_cnt > BIT_7) {
+[e $ ! > -> F3208 `i -> _BIT_7 `i 435  ]
+{
+"471
+[; ;tundra.c: 471:           fStart_bit = 0;
+[e = F3210 -> -> 0 `i `a ]
+"472
+[; ;tundra.c: 472:           fReceiver_Byte = 1;
+[e = _fReceiver_Byte -> -> 1 `i `a ]
+"473
+[; ;tundra.c: 473:         }
+}
+[e :U 435 ]
+"474
+[; ;tundra.c: 474:       }
+}
+[e :U 432 ]
+"475
+[; ;tundra.c: 475:     }
 }
 [e :U 425 ]
-"472
-[; ;tundra.c: 472:   }
+"477
+[; ;tundra.c: 477:   }
 }
-[e $U 438  ]
-"473
-[; ;tundra.c: 473:   else if (CCP3CON == RISING_EDGE_TRIG) {
+[e $U 436  ]
+"478
+[; ;tundra.c: 478:   else if (CCP3CON == RISING_EDGE_TRIG) {
 [e :U 424 ]
-[e $ ! == -> _CCP3CON `i -> _RISING_EDGE_TRIG `i 439  ]
+[e $ ! == -> _CCP3CON `i -> _RISING_EDGE_TRIG `i 437  ]
 {
-"475
-[; ;tundra.c: 475:     rising_edge_time = capturedValue;
-[e = F3207 _capturedValue ]
-"476
-[; ;tundra.c: 476:     CCP3CON = FALLING_EDGE_TRIG;
-[e = _CCP3CON _FALLING_EDGE_TRIG ]
 "480
-[; ;tundra.c: 480:     if (rising_edge_time >= falling_edge_time) {
-[e $ ! >= -> F3207 `ui -> F3206 `ui 440  ]
-{
+[; ;tundra.c: 480:     rising_edge_time = capturedValue;
+[e = F3207 _capturedValue ]
 "481
-[; ;tundra.c: 481:       negative_pulse_width = rising_edge_time - falling_edge_time;
-[e = F3201 -> - -> F3207 `ui -> F3206 `ui `us ]
-"482
-[; ;tundra.c: 482:     } else {
-}
-[e $U 441  ]
-[e :U 440 ]
-{
-"484
-[; ;tundra.c: 484:       negative_pulse_width = ~falling_edge_time + 1 + rising_edge_time;
-[e = F3201 -> + + ~ -> F3206 `ui -> -> 1 `i `ui -> F3207 `ui `us ]
+[; ;tundra.c: 481:     CCP3CON = FALLING_EDGE_TRIG;
+[e = _CCP3CON _FALLING_EDGE_TRIG ]
 "485
-[; ;tundra.c: 485:     }
-}
-[e :U 441 ]
+[; ;tundra.c: 485:     if (rising_edge_time >= falling_edge_time) {
+[e $ ! >= -> F3207 `ui -> F3206 `ui 438  ]
+{
 "486
-[; ;tundra.c: 486:     fRise_edge = 1;
-[e = F3209 -> -> 1 `i `a ]
+[; ;tundra.c: 486:       negative_pulse_width = rising_edge_time - falling_edge_time;
+[e = F3201 -> - -> F3207 `ui -> F3206 `ui `us ]
 "487
-[; ;tundra.c: 487:   }
+[; ;tundra.c: 487:     } else {
+}
+[e $U 439  ]
+[e :U 438 ]
+{
+"489
+[; ;tundra.c: 489:       negative_pulse_width = ~falling_edge_time + 1 + rising_edge_time;
+[e = F3201 -> + + ~ -> F3206 `ui -> -> 1 `i `ui -> F3207 `ui `us ]
+"490
+[; ;tundra.c: 490:     }
 }
 [e :U 439 ]
-[e :U 438 ]
-"488
-[; ;tundra.c: 488: }
+"491
+[; ;tundra.c: 491:     fRise_edge = 1;
+[e = F3209 -> -> 1 `i `a ]
+"492
+[; ;tundra.c: 492:   }
+}
+[e :U 437 ]
+[e :U 436 ]
+"493
+[; ;tundra.c: 493: }
 [e :UE 423 ]
 }
-"490
-[; ;tundra.c: 490: void sofaware_initialize(void) {
+"495
+[; ;tundra.c: 495: void sofaware_initialize(void) {
 [v _sofaware_initialize `(v ~T0 @X0 1 ef ]
 {
 [e :U _sofaware_initialize ]
 [f ]
-"491
-[; ;tundra.c: 491:   TMR0_SetInterruptHandler(TMR0_10MS_Even);
-[e ( _TMR0_SetInterruptHandler (1 &U _TMR0_10MS_Even ]
-"492
-[; ;tundra.c: 492:   Clear_No_Call_Warning();
-[e ( _Clear_No_Call_Warning ..  ]
-"493
-[; ;tundra.c: 493: }
-[e :UE 442 ]
-}
 "496
-[; ;tundra.c: 496: void TMR0_10MS_Even(void) {
+[; ;tundra.c: 496:   TMR0_SetInterruptHandler(TMR0_10MS_Even);
+[e ( _TMR0_SetInterruptHandler (1 &U _TMR0_10MS_Even ]
+"497
+[; ;tundra.c: 497:   Clear_No_Call_Warning();
+[e ( _Clear_No_Call_Warning ..  ]
+"498
+[; ;tundra.c: 498: }
+[e :UE 440 ]
+}
+"501
+[; ;tundra.c: 501: void TMR0_10MS_Even(void) {
 [v _TMR0_10MS_Even `(v ~T0 @X0 1 ef ]
 {
 [e :U _TMR0_10MS_Even ]
 [f ]
-"497
-[; ;tundra.c: 497:   Communication_timer++;
-[e ++ _Communication_timer -> -> 1 `i `Vuc ]
-"498
-[; ;tundra.c: 498:   if (Communication_timer >= 200) {
-[e $ ! >= -> _Communication_timer `i -> 200 `i 444  ]
-{
-"499
-[; ;tundra.c: 499:     eLamp_even = eEVEN_SIGNAL_TIMEOUT;
-[e = _eLamp_even . `E3137 2 ]
-"500
-[; ;tundra.c: 500:     Communication_timer = 0;
-[e = _Communication_timer -> -> 0 `i `uc ]
-"501
-[; ;tundra.c: 501:   }
-}
-[e :U 444 ]
 "502
-[; ;tundra.c: 502: }
-[e :UE 443 ]
-}
+[; ;tundra.c: 502:   Communication_timer++;
+[e ++ _Communication_timer -> -> 1 `i `Vuc ]
+"503
+[; ;tundra.c: 503:   if (Communication_timer >= 200) {
+[e $ ! >= -> _Communication_timer `i -> 200 `i 442  ]
+{
+"504
+[; ;tundra.c: 504:     eLamp_even = eEVEN_SIGNAL_TIMEOUT;
+[e = _eLamp_even . `E3137 2 ]
 "505
-[; ;tundra.c: 505: void tundra_main(void) {
+[; ;tundra.c: 505:     Communication_timer = 0;
+[e = _Communication_timer -> -> 0 `i `uc ]
+"506
+[; ;tundra.c: 506:   }
+}
+[e :U 442 ]
+"507
+[; ;tundra.c: 507: }
+[e :UE 441 ]
+}
+"510
+[; ;tundra.c: 510: void tundra_main(void) {
 [v _tundra_main `(v ~T0 @X0 1 ef ]
 {
 [e :U _tundra_main ]
 [f ]
-"506
-[; ;tundra.c: 506:   receiver_frame_data();
-[e ( _receiver_frame_data ..  ]
-"507
-[; ;tundra.c: 507:   analysis_of_data();
-[e ( _analysis_of_data ..  ]
-"508
-[; ;tundra.c: 508:   check_unlock_even();
-[e ( _check_unlock_even ..  ]
-"509
-[; ;tundra.c: 509:   check_lamp_off_even();
-[e ( _check_lamp_off_even ..  ]
 "511
-[; ;tundra.c: 511:   switch (eLamp_even) {
-[e $U 447  ]
-{
+[; ;tundra.c: 511:   receiver_frame_data();
+[e ( _receiver_frame_data ..  ]
 "512
-[; ;tundra.c: 512:   case eEVEN_SIGNAL_OK:
-[e :U 448 ]
+[; ;tundra.c: 512:   analysis_of_data();
+[e ( _analysis_of_data ..  ]
 "513
-[; ;tundra.c: 513:     LED_control();
-[e ( _LED_control ..  ]
+[; ;tundra.c: 513:   check_unlock_even();
+[e ( _check_unlock_even ..  ]
 "514
-[; ;tundra.c: 514:     break;
-[e $U 446  ]
-"515
-[; ;tundra.c: 515:   case eEVEN_SIGNAL_TIMEOUT:
-[e :U 449 ]
+[; ;tundra.c: 514:   check_lamp_off_even();
+[e ( _check_lamp_off_even ..  ]
 "516
-[; ;tundra.c: 516:     to_do_signal_timeout();
-[e ( _to_do_signal_timeout ..  ]
+[; ;tundra.c: 516:   switch (eLamp_even) {
+[e $U 445  ]
+{
 "517
-[; ;tundra.c: 517:     break;
-[e $U 446  ]
-"518
-[; ;tundra.c: 518:   case eEVEN_SIGNAL_UNLOCK:
-[e :U 450 ]
-"519
-[; ;tundra.c: 519:     to_do_unlock();
-[e ( _to_do_unlock ..  ]
-"520
-[; ;tundra.c: 520:     break;
-[e $U 446  ]
-"521
-[; ;tundra.c: 521:   case eEVEN_SIGNAL_CLEAR:
-[e :U 451 ]
-"522
-[; ;tundra.c: 522:     to_do_lamp_off();
-[e ( _to_do_lamp_off ..  ]
-"523
-[; ;tundra.c: 523:     break;
-[e $U 446  ]
-"524
-[; ;tundra.c: 524:   case eEVEN_SIGNAL_NOTHING:
-[e :U 452 ]
-"525
-[; ;tundra.c: 525:     __nop();
-[e ( ___nop ..  ]
-"526
-[; ;tundra.c: 526:     break;
-[e $U 446  ]
-"527
-[; ;tundra.c: 527:   default:
-[e :U 453 ]
-"528
-[; ;tundra.c: 528:     __nop();
-[e ( ___nop ..  ]
-"529
-[; ;tundra.c: 529:     break;
-[e $U 446  ]
-"530
-[; ;tundra.c: 530:   }
-}
-[e $U 446  ]
-[e :U 447 ]
-[e [\ -> _eLamp_even `ui , $ -> . `E3137 1 `ui 448
- , $ -> . `E3137 2 `ui 449
- , $ -> . `E3137 3 `ui 450
- , $ -> . `E3137 4 `ui 451
- , $ -> . `E3137 0 `ui 452
- 453 ]
+[; ;tundra.c: 517:   case eEVEN_SIGNAL_OK:
 [e :U 446 ]
+"518
+[; ;tundra.c: 518:     LED_control();
+[e ( _LED_control ..  ]
+"519
+[; ;tundra.c: 519:     break;
+[e $U 444  ]
+"520
+[; ;tundra.c: 520:   case eEVEN_SIGNAL_TIMEOUT:
+[e :U 447 ]
+"521
+[; ;tundra.c: 521:     to_do_signal_timeout();
+[e ( _to_do_signal_timeout ..  ]
+"522
+[; ;tundra.c: 522:     break;
+[e $U 444  ]
+"523
+[; ;tundra.c: 523:   case eEVEN_SIGNAL_UNLOCK:
+[e :U 448 ]
+"524
+[; ;tundra.c: 524:     to_do_unlock();
+[e ( _to_do_unlock ..  ]
+"525
+[; ;tundra.c: 525:     break;
+[e $U 444  ]
+"526
+[; ;tundra.c: 526:   case eEVEN_SIGNAL_CLEAR:
+[e :U 449 ]
+"527
+[; ;tundra.c: 527:     to_do_lamp_off();
+[e ( _to_do_lamp_off ..  ]
+"528
+[; ;tundra.c: 528:     break;
+[e $U 444  ]
+"529
+[; ;tundra.c: 529:   case eEVEN_SIGNAL_NOTHING:
+[e :U 450 ]
+"530
+[; ;tundra.c: 530:     __nop();
+[e ( ___nop ..  ]
 "531
-[; ;tundra.c: 531: }
-[e :UE 445 ]
+[; ;tundra.c: 531:     break;
+[e $U 444  ]
+"532
+[; ;tundra.c: 532:   default:
+[e :U 451 ]
+"533
+[; ;tundra.c: 533:     __nop();
+[e ( ___nop ..  ]
+"534
+[; ;tundra.c: 534:     break;
+[e $U 444  ]
+"535
+[; ;tundra.c: 535:   }
+}
+[e $U 444  ]
+[e :U 445 ]
+[e [\ -> _eLamp_even `ui , $ -> . `E3137 1 `ui 446
+ , $ -> . `E3137 2 `ui 447
+ , $ -> . `E3137 3 `ui 448
+ , $ -> . `E3137 4 `ui 449
+ , $ -> . `E3137 0 `ui 450
+ 451 ]
+[e :U 444 ]
+"536
+[; ;tundra.c: 536: }
+[e :UE 443 ]
 }

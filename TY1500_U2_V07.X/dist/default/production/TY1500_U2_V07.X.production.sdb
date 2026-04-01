@@ -123,11 +123,11 @@ eRECEIVE_CS 10
 [v _receiver_frame_data receiver_frame_data `(v  1 e 1 0 ]
 "396
 [v _ECCP3_CallBack ECCP3_CallBack `(v  1 e 1 0 ]
-"490
+"495
 [v _sofaware_initialize sofaware_initialize `(v  1 e 1 0 ]
-"496
+"501
 [v _TMR0_10MS_Even TMR0_10MS_Even `(v  1 e 1 0 ]
-"505
+"510
 [v _tundra_main tundra_main `(v  1 e 1 0 ]
 [s S236 . 1 `uc 1 IOCIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
@@ -368,10 +368,10 @@ eRECEIVE_CS 10
 {
 "74
 } 0
-"505 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
+"510 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
 [v _tundra_main tundra_main `(v  1 e 1 0 ]
 {
-"531
+"536
 } 0
 "249
 [v _to_do_unlock to_do_unlock `(v  1 e 1 0 ]
@@ -469,10 +469,10 @@ eRECEIVE_CS 10
 [v _DRL_OFF DRL_OFF `(v  1 e 1 0 ]
 {
 } 0
-"490 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
+"495 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
 [v _sofaware_initialize sofaware_initialize `(v  1 e 1 0 ]
 {
-"493
+"498
 } 0
 "140 D:\yiming\00work\TY1500_U2_V07.X\mcc_generated_files/tmr0.c
 [v _TMR0_SetInterruptHandler TMR0_SetInterruptHandler `(v  1 e 1 0 ]
@@ -606,10 +606,10 @@ eRECEIVE_CS 10
 {
 "138
 } 0
-"496 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
+"501 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
 [v _TMR0_10MS_Even TMR0_10MS_Even `(v  1 e 1 0 ]
 {
-"502
+"507
 } 0
 "82 D:\yiming\00work\TY1500_U2_V07.X\mcc_generated_files/eccp3.c
 [v _ECCP3_CaptureISR ECCP3_CaptureISR `(v  1 e 1 0 ]
@@ -618,12 +618,15 @@ eRECEIVE_CS 10
 "84
 [s S369 . 2 `us 1 ccpr3_16Bit 2 0 ]
 [u S371 CCPR3Reg_tag 2 `S366 1 . 2 0 `S369 1 . 2 0 ]
-[v ECCP3_CaptureISR@module module `S371  1 a 2 4 ]
+[v ECCP3_CaptureISR@module module `S371  1 a 2 5 ]
 "95
 } 0
 "396 D:\yiming\00work\TY1500_U2_V07.X\tundra.c
 [v _ECCP3_CallBack ECCP3_CallBack `(v  1 e 1 0 ]
 {
+"407
+[v ECCP3_CallBack@fUART_TX fUART_TX `a  1 a 1 4 ]
+"396
 [v ECCP3_CallBack@capturedValue capturedValue `us  1 p 2 0 ]
 "397
 [v ECCP3_CallBack@negative_pulse_width negative_pulse_width `us  1 s 2 negative_pulse_width ]
@@ -633,8 +636,6 @@ eRECEIVE_CS 10
 [v ECCP3_CallBack@positive_pulse_width_us positive_pulse_width_us `uc  1 s 1 positive_pulse_width_us ]
 "400
 [v ECCP3_CallBack@negative_pulse_width_us negative_pulse_width_us `uc  1 s 1 negative_pulse_width_us ]
-"401
-[v ECCP3_CallBack@diff_us diff_us `uc  1 s 1 diff_us ]
 "402
 [v ECCP3_CallBack@falling_edge_time falling_edge_time `us  1 s 2 falling_edge_time ]
 "403
@@ -645,5 +646,5 @@ eRECEIVE_CS 10
 [v ECCP3_CallBack@fRise_edge fRise_edge `a  1 s 1 fRise_edge ]
 "406
 [v ECCP3_CallBack@fStart_bit fStart_bit `a  1 s 1 fStart_bit ]
-"488
+"493
 } 0

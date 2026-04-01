@@ -404,6 +404,7 @@ void ECCP3_CallBack(uint16_t capturedValue) {
   static uint8_t bit_cnt = 0;
   static bool fRise_edge = 0;
   static bool fStart_bit = 0;
+  bool fUART_TX = 0;
 
   if (CCP3CON == FALLING_EDGE_TRIG) {
     // 計算正脈波寬度
@@ -425,14 +426,16 @@ void ECCP3_CallBack(uint16_t capturedValue) {
       // PWM 變成 UART 19200 baud
       if (positive_pulse_width_us > UART_LEVEL) {
         UART_TX = 0;
+        fUART_TX=0;
       } else {
         UART_TX = 1;
+        fUART_TX=1;
       }
 
-      if (positive_pulse_width_us > negative_pulse_width_us)
-        diff_us = positive_pulse_width_us - negative_pulse_width_us;
-      else
-        diff_us = negative_pulse_width_us - positive_pulse_width_us;
+      // if (positive_pulse_width_us > negative_pulse_width_us)
+      //   diff_us = positive_pulse_width_us - negative_pulse_width_us;
+      // else
+      //   diff_us = negative_pulse_width_us - positive_pulse_width_us;
 
       // 測試正脈波寬度範圍
       // if (positive_pulse_width_us > positive_pulse_width_us_max) {
@@ -445,14 +448,16 @@ void ECCP3_CallBack(uint16_t capturedValue) {
       // UART receiver
       if (!fStart_bit) {
         // uart start bit
-        if (diff_us < LOGIC_LEVEL) {
+        // if (diff_us < LOGIC_LEVEL) {
+        if (!fUART_TX) {
           // logical '0'
           fStart_bit = 1;
           bit_cnt = 0;
         }
       } else {
         // uart data
-        if (diff_us < LOGIC_LEVEL) {
+        // if (diff_us < LOGIC_LEVEL) {
+        if (!fUART_TX) {
           // logical '0'
           rx_data &= ~(1 << bit_cnt);
         } else {

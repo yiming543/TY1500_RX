@@ -43,9 +43,9 @@
 //(auto白天模式沒有unlock信號 ACC OFF[由電池供電] 會造成沒有LIN信號亮燈)
 //取消unlock信號
 
-//202603/31 TY_1500_U2)V07 CS:3E82
+//202603/31 TY_1500_U2_V07 CS:DB06
 //UART_TX與接收同步.
-//UART_TX 改為RC6
+//UART_TX 改為RB6
 
 
 #include "tundra.h"
