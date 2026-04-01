@@ -1,0 +1,4 @@
+D:/yiming/00work/TY1500_U2_V01.X/_build/TY1500_U2_V01/default/CMakeFiles/TY1500_U2_V01_default_default_XC8_compile.dir
+D:/yiming/00work/TY1500_U2_V01.X/_build/TY1500_U2_V01/default/CMakeFiles/TY1500_U2_V01_default_image_ymTU6_9H.dir
+D:/yiming/00work/TY1500_U2_V01.X/_build/TY1500_U2_V01/default/CMakeFiles/edit_cache.dir
+D:/yiming/00work/TY1500_U2_V01.X/_build/TY1500_U2_V01/default/CMakeFiles/rebuild_cache.dir
